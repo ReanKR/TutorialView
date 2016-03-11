@@ -1,0 +1,5 @@
+# TutorialView main configuration
+Config-Version: 1
+Compatibles:
+  Vault: true
+  Economy: true

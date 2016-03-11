@@ -1,0 +1,71 @@
+# My English grammar is bad. Please ask a favour.
+# This file is a sample to learn how to use the plugin.
+# Please refer to the website of the manufacturer for more information.
+# If you found bugs, Please send in this email -> whitehack97@gmail.com
+
+Name: "&eExample Tutorial"
+# tutorial name. To start the tutorial, required.
+
+Block-Movement: true
+# If you enable this, The user cannot movement when progress the tutorial.
+
+Block-All-Commands: true
+# If you enable this, The user cannot use a command when progress the tutorial.
+
+Broadcast-Complete-Tutorial: true
+# If you enable this, Broadcasting when other user complete the tutorial.
+
+Default-Delay-Seconds: 6
+# Set the time to show the sentence, required.
+
+Default-Cooldown-Seconds: 5
+# Set the time to the start countdown. required.
+
+Sound-Disabled: false
+# Sound disabled when tutorial progress.
+
+Using-TitleAPI: true
+# Instead of show screen message, added sub message. recommand.
+
+Result:
+  Run-Commands: true
+  # the player run commands when tutorial complete.
+  Reward-Items: true
+  # send items to player when tutorial complete.
+  Commands:
+  - 'Console: say %player% Tutorial Complete.'
+  # Console: [Command] <- Send the command using the console.
+  - 'OP: spawn %player%'
+  # OP: [Command] <- Use the commands using operator permissions.
+  - 'Money: 100'
+  # Money: [Amounts] <- send a money to player when tutorial complete.
+  # To use this function properly, you need a plugin Economy API functions.
+  # Also, set 'true' in config.yml.Compatibles.Economy.
+  - 'spawn'
+  # [commands] <- Use the commands using user permissions.
+
+#
+# Result Item Configuration
+#
+# Custom: <- Index name,Required.
+#  ID: 1 <- Item ID. For example Gress Id is 2. Required.
+#  DATA-VALUE: 0 <- Item Data. For example Black wool data value is 15.
+#  NAME: "&e Example Name" <- Custom Name.
+#  AMOUNTS: 1 <- Item amounts.
+#  DESCRIPTION: <- possible instace of 'Lore'.
+#  - '&aThis is example item.'
+#  - '&eSupport color codes.'
+#  ENCHANTMENT: <- Add to enchants
+#  - 'PROTECTION_FIRE, 1'
+# 
+  Items:
+    Custom:
+      ID: 1
+      DATA-VALUE: 0
+      NAME: '&eStrange Stone'
+      Amounts: 2
+      DESCRIPTION:
+      - '&aUser: What is it?'
+      - '&eServer: &9I don''t know. lol'
+      ENCHANTMENT:
+      - PROTECTION_FIRE, 1

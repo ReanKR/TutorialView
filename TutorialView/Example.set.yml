@@ -1,0 +1,27 @@
+# If you want register location, Use command /tv set [Example]
+# Methods registered by the command.
+# If you don't know these sentences, Don't modify. It causes problem!
+one:
+  World: world
+  Coordinates:
+    X: 0.000000000
+    Y: 255.0000000
+    Z: 0.000000000
+  Angle:
+    Yaw: -128.0000000
+    Pitch: 128.00000000
+  Messages:
+    Main: "&aMain Message"
+    Sub: "&eSub Message"
+two:
+  World: world
+  Coordinates:
+    X: 0.000000000
+    Y: 128.0000000
+    Z: 0.000000000
+  Angle:
+    Yaw: -128.0000000
+    Pitch: 128.00000000
+  Messages:
+    Main: "&aThis is sample"
+    Sub: "&esample message"
