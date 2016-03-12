@@ -20,6 +20,7 @@ import org.whitehack97.TutorialView.api.TutorialManager;
 
 public class TutorialConfig
 {
+	@SuppressWarnings("deprecation")
 	public static void LoadTutorialConfig()
 	{
 		File directory = new File("plugins/TutorialView/Tutorials");
