@@ -37,6 +37,7 @@ import org.whitehack97.TutorialView.api.Tutorial;
 
 public class TutorialManager
 {
+	private String RunCommand;
 	private String Name = "TutorialView";
 	private boolean BlockMovement = true;
 	private boolean BlockAllCommands = true;
@@ -55,6 +56,12 @@ public class TutorialManager
 	{
 		this.tutorial = tutorial;
 	}
+	
+	public void setRunCommand(String Command)
+	{
+		this.RunCommand = Command;
+	}
+	
 	public void setName(String Name)
 	{
 		this.Name = Name;
@@ -144,6 +151,11 @@ public class TutorialManager
 	public Tutorial getTutorial()
 	{
 		return this.tutorial;
+	}
+	
+	public String getRunCommand()
+	{
+		return this.RunCommand;
 	}
 	
 	public String getName()

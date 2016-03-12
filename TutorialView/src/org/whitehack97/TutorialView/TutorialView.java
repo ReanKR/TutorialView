@@ -27,13 +27,15 @@ package org.whitehack97.TutorialView;
  *  authors and contributors and should not be interpreted as representing official policies,
  *  either expressed or implied, of anybody else.
  */
-
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.whitehack97.TutorialView.api.ErrorReport;
 import org.whitehack97.TutorialView.api.PlayerManager;
 import org.whitehack97.TutorialView.api.TutorialManager;
 
@@ -43,6 +45,7 @@ public class TutorialView extends JavaPlugin implements Listener
 	public static Map<String, TutorialManager> AllTutorial = new HashMap<String, TutorialManager>();
 	public static Map<Player, PlayerManager> PlayerInformation = new HashMap<Player, PlayerManager>();
 	public static String Prefix = "」e[」2T」futorial」bV」fiew」e]」f ";
+	public static List<ErrorReport> ErrorReports = new ArrayList<ErrorReport>();
 	
 	@Override
 	public void onEnable()

@@ -14,6 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.whitehack97.TutorialView.TutorialView;
 import org.whitehack97.TutorialView.Util.FileManager;
 import org.whitehack97.TutorialView.Util.SubManager;
+import org.whitehack97.TutorialView.api.ErrorReport;
 import org.whitehack97.TutorialView.api.MethodInterface;
 import org.whitehack97.TutorialView.api.Tutorial;
 import org.whitehack97.TutorialView.api.TutorialManager;
@@ -38,7 +39,12 @@ public class TutorialConfig
 					Set<String> TutorialMethodName = InterfaceSection.getKeys(false);
 					if(TutorialMethodName.size() == 0)
 					{
-						Bukkit.getConsoleSender().sendMessage(TutorialView.Prefix + "¡×e" + file.getName() + " is not registered.");
+						ErrorReport Report = new ErrorReport();
+						Report.setAddress("Tutorials/Methods/" + Cutter[0] + ".yml");
+						Report.setCausedMethod("Tutorials/Methods/" + Cutter[0] + ".set.yml not exist or empty");
+						Report.setMethod("ERROR");
+						Report.setMessage("There is no tutorial information");
+						TutorialView.ErrorReports.add(Report);
 						continue;
 					}
 
@@ -52,17 +58,18 @@ public class TutorialConfig
 					tutorial.setInterface(TutorialMethods);
 					
 					TutorialManager Manager = new TutorialManager(tutorial);
-					Manager.setName(TutorialSection.getString("Name"));
-					Manager.setBlockMovement(TutorialSection.getBoolean("Block-Movement"));
-					Manager.setBlockAllCommands(TutorialSection.getBoolean("Block-All-Commands"));
-					Manager.setBroadcastCompleteTutorial(TutorialSection.getBoolean("Broadcast-Complete-Tutorial"));
-					Manager.setDelaySeconds(TutorialSection.getInt("Default-Delay-Seconds"));
-					Manager.setCooldownSeconds(TutorialSection.getInt("Default-Cooldown-Seconds"));
-					Manager.setSoundDisabled(TutorialSection.getBoolean("Sound-Disabled"));
-					Manager.setUsingTitleAPI(TutorialSection.getBoolean("Using-TitleAPI"));
-					Manager.setEnableRuncommands(TutorialSection.getBoolean("Result.Run-Commands"));
-					Manager.setEnableResultItems(TutorialSection.getBoolean("Result.Result-Items"));
-					Manager.setCommands(TutorialSection.getStringList("Result.Commands"));
+					if(TutorialSection.contains("Command")) Manager.setRunCommand(TutorialSection.getString("Command"));
+					if(TutorialSection.contains("Name")) Manager.setName(TutorialSection.getString("Name"));
+					if(TutorialSection.contains("Block-Movement")) Manager.setBlockMovement(TutorialSection.getBoolean("Block-Movement"));
+					if(TutorialSection.contains("Block-All-Commands")) Manager.setBlockAllCommands(TutorialSection.getBoolean("Block-All-Commands"));
+					if(TutorialSection.contains("Broadcast-Complete-Tutorial")) Manager.setBroadcastCompleteTutorial(TutorialSection.getBoolean("Broadcast-Complete-Tutorial"));
+					if(TutorialSection.contains("Default-Delay-Seconds")) Manager.setDelaySeconds(TutorialSection.getInt("Default-Delay-Seconds"));
+					if(TutorialSection.contains("Default-Cooldown-Seconds")) Manager.setCooldownSeconds(TutorialSection.getInt("Default-Cooldown-Seconds"));
+					if(TutorialSection.contains("Sound-Disabled")) Manager.setSoundDisabled(TutorialSection.getBoolean("Sound-Disabled"));
+					if(TutorialSection.contains("Using-TitleAPI")) Manager.setUsingTitleAPI(TutorialSection.getBoolean("Using-TitleAPI"));
+					if(TutorialSection.contains("Result.Run-Commands")) Manager.setEnableRuncommands(TutorialSection.getBoolean("Result.Run-Commands"));
+					if(TutorialSection.contains("Result.Result-Items")) Manager.setEnableResultItems(TutorialSection.getBoolean("Result.Result-Items"));
+					if(TutorialSection.contains("Result.Commands")) Manager.setCommands(TutorialSection.getStringList("Result.Commands"));
 	
 					Set<String> ResultMethodName = TutorialSection.getConfigurationSection("Result.Items").getKeys(false);
 					for(String Name : ResultMethodName)
@@ -91,8 +98,20 @@ public class TutorialConfig
 							List<String> Enchantments = Section.getStringList("ENCHANTMENT");
 							for(String Enchant : Enchantments)
 							{
-								String[] EnchantCutter = Enchant.split(", ");
-								Metadata.addEnchant(Enchantment.getByName(EnchantCutter[0]), Integer.parseInt(Cutter[1]), true);
+								try
+								{
+									String[] EnchantCutter = Enchant.split(", ");
+									Metadata.addEnchant(Enchantment.getByName(EnchantCutter[0]), Integer.parseInt(Cutter[1]), true);
+								}
+								catch(NullPointerException e)
+								{
+									ErrorReport Report = new ErrorReport();
+									Report.setAddress("Tutorials/Methods/" + Cutter[0] + ".yml");
+									Report.setCausedMethod(Enchant);
+									Report.setMethod("ERROR");
+									Report.setMessage("The method is not enchanted");
+									TutorialView.ErrorReports.add(Report);
+								}
 							}
 						}
 						itemstack.setItemMeta(Metadata);
