@@ -28,10 +28,64 @@ package org.whitehack97.TutorialView.api;
  *  either expressed or implied, of anybody else.
  */
 
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.whitehack97.TutorialView.TutorialView;
+import org.whitehack97.TutorialView.Util.FileManager;
+
 public class MethodInterface
 {
-	public void setWorld()
+	private String YamlerName;
+	private Location location;
+	private String MainMessage;
+	private String SubMessage;
+	private YamlConfiguration TutorialSection;
+	private double x;
+	private double y;
+	private double z;
+	private float yaw;
+	private float pitch;
+	private World world;
+	
+	public MethodInterface(String YamlName, String Section)
 	{
-		
+		this.TutorialSection = FileManager.LoadFile("Tutorials/" + YamlName + ".set");
+		this.YamlerName = YamlName;
+
+		world = TutorialView.plugin.getServer().getWorld(TutorialSection.getString(Section + ".World"));
+		x = TutorialSection.getDouble(Section + ".Coordinates.X");
+		y = TutorialSection.getDouble(Section + ".Coordinates.Y");
+		z = TutorialSection.getDouble(Section + ".Coordinates.Z");
+		yaw = Float.parseFloat(TutorialSection.getString(Section + ".Angle.Yaw"));
+		pitch = Float.parseFloat(TutorialSection.getString(Section + ".Angle.Pitch"));
+		location = new Location(world, x, y, z, yaw, pitch);
+		MainMessage = TutorialSection.getString(Section + ".Messages.Main");
+		SubMessage = TutorialSection.getString(Section + ".Messages.Sub");
+	}
+	
+	public String getYamlerName()
+	{
+		return this.YamlerName;
+	}
+	
+	public Location getLocation()
+	{
+		return this.location;
+	}
+	
+	public String getMainMessage()
+	{
+		return this.MainMessage;
+	}
+	
+	public String getSubMessage()
+	{
+		return this.SubMessage;
+	}
+	
+	public YamlConfiguration getSection()
+	{
+		return this.TutorialSection;
 	}
 }
