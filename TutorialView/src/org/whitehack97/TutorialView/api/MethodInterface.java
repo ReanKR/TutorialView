@@ -47,11 +47,13 @@ public class MethodInterface
 	private float yaw;
 	private float pitch;
 	private World world;
+	private String MethodName;
 	
 	public MethodInterface(String YamlName, String Section)
 	{
-		this.TutorialSection = FileManager.LoadFile("Tutorials/" + YamlName + ".set");
+		this.TutorialSection = FileManager.LoadFile("Tutorials/Methods/" + YamlName + ".set");
 		this.YamlerName = YamlName;
+		this.MethodName = Section;
 
 		world = TutorialView.plugin.getServer().getWorld(TutorialSection.getString(Section + ".World"));
 		x = TutorialSection.getDouble(Section + ".Coordinates.X");
@@ -62,6 +64,11 @@ public class MethodInterface
 		location = new Location(world, x, y, z, yaw, pitch);
 		MainMessage = TutorialSection.getString(Section + ".Messages.Main");
 		SubMessage = TutorialSection.getString(Section + ".Messages.Sub");
+	}
+	
+	public String getMethodName()
+	{
+		return this.MethodName;
 	}
 	
 	public String getYamlerName()

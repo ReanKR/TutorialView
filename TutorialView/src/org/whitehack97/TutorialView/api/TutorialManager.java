@@ -37,6 +37,7 @@ import org.whitehack97.TutorialView.api.Tutorial;
 
 public class TutorialManager
 {
+	private String Name = "TutorialView";
 	private boolean BlockMovement = true;
 	private boolean BlockAllCommands = true;
 	private boolean BroadcastCompleteTutorial = true;
@@ -54,6 +55,11 @@ public class TutorialManager
 	{
 		this.tutorial = tutorial;
 	}
+	public void setName(String Name)
+	{
+		this.Name = Name;
+	}
+	
 	public void setBlockMovement(boolean Enabled)
 	{
 		this.BlockMovement = Enabled;
@@ -138,6 +144,11 @@ public class TutorialManager
 	public Tutorial getTutorial()
 	{
 		return this.tutorial;
+	}
+	
+	public String getName()
+	{
+		return this.Name;
 	}
 	
 	public boolean isBlockMovement()

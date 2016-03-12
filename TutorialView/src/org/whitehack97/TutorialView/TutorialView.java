@@ -42,12 +42,12 @@ public class TutorialView extends JavaPlugin implements Listener
 	public static TutorialView plugin;
 	public static Map<String, TutorialManager> AllTutorial = new HashMap<String, TutorialManager>();
 	public static Map<Player, PlayerManager> PlayerInformation = new HashMap<Player, PlayerManager>();
-	public static String Prefix;
+	public static String Prefix = "」e[」2T」futorial」bV」fiew」e]」f ";
 	
 	@Override
-	public void onEnable() {
-		// TODO Auto-generated method stub
-		super.onEnable();
+	public void onEnable()
+	{
+		
 	}
 	
 	@Override
