@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
@@ -41,9 +40,8 @@ public class TutorialConfig
 					{
 						ErrorReport Report = new ErrorReport();
 						Report.setAddress("Tutorials/Methods/" + Cutter[0] + ".yml");
-						Report.setCausedMethod("Tutorials/Methods/" + Cutter[0] + ".set.yml not exist or empty");
 						Report.setMethod("ERROR");
-						Report.setMessage("There is no tutorial information");
+						Report.setMessage("There is no tutorial config information");
 						TutorialView.ErrorReports.add(Report);
 						continue;
 					}
@@ -56,7 +54,6 @@ public class TutorialConfig
 					}
 					Tutorial tutorial = new Tutorial(Cutter[0]);
 					tutorial.setInterface(TutorialMethods);
-					
 					TutorialManager Manager = new TutorialManager(tutorial);
 					if(TutorialSection.contains("Command")) Manager.setRunCommand(TutorialSection.getString("Command"));
 					if(TutorialSection.contains("Name")) Manager.setName(TutorialSection.getString("Name"));
@@ -72,6 +69,15 @@ public class TutorialConfig
 					if(TutorialSection.contains("Result.Commands")) Manager.setCommands(TutorialSection.getStringList("Result.Commands"));
 	
 					Set<String> ResultMethodName = TutorialSection.getConfigurationSection("Result.Items").getKeys(false);
+					if(ResultMethodName.size() == 0)
+					{
+						ErrorReport Report = new ErrorReport();
+						Report.setAddress("Tutorials/Methods/" + Cutter[0] + "set.yml");
+						Report.setMethod("ERROR");
+						Report.setMessage("There is no tutorial interface information");
+						TutorialView.ErrorReports.add(Report);
+						continue;
+					}
 					for(String Name : ResultMethodName)
 					{
 						int ID = 1;
