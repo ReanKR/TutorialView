@@ -1,7 +1,7 @@
 package org.whitehack97.TutorialView.api;
 
 /*
- * Copyright 2016 whitehack97(Rean KR). All rights reserved.
+ * Copyright 2016 whitehack97@gmail.com (Rean KR). All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without modification, are
  *  permitted provided that the following conditions are met:
