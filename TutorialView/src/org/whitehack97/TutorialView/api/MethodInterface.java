@@ -1,5 +1,7 @@
 package org.whitehack97.TutorialView.api;
 
+import java.io.File;
+
 /*
  * Copyright 2016 whitehack97(Rean KR). All rights reserved.
  *
@@ -51,7 +53,7 @@ public class MethodInterface
 	
 	public MethodInterface(String YamlName, String Section)
 	{
-		this.TutorialSection = FileManager.LoadFile("Tutorials/Methods/" + YamlName + ".set");
+		this.TutorialSection = YamlConfiguration.loadConfiguration(new File("plugins/TutorialView/Tutorials/Methods/" + YamlName + "_set.yml"));
 		this.YamlerName = YamlName;
 		this.MethodName = Section;
 

@@ -1,0 +1,15 @@
+﻿name: TutorialView
+version: 1.0.0
+main: org.whitehack97.TutorialView.TutorialView
+author: ReanKR
+description: It offers the same functions as those of the tutorial in the server.
+
+commands:
+  TutorialView.Main:
+    description: §eTutorialView Main Commands
+    aliases: [tv, tutorialview, tutorialv, tutorial]
+
+permissions:
+  tutorialview.*:
+    description: No Description.
+    default: false

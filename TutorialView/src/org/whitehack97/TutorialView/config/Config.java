@@ -17,9 +17,8 @@ public class Config
 	
 	public static void CheckingServerPlugin()
 	{
+		YamlConfiguration PluginSection = FileManager.LoadSourceFile("config");
 		File ConfigFile = FileManager.getFile("config");
-		YamlConfiguration PluginSection = FileManager.LoadFile("config");
-
 		if(!PluginSection.contains("Config-Version"))
 		{
 			ErrorReport Report = new ErrorReport();
@@ -46,6 +45,7 @@ public class Config
 				Report.setMessage("This plugin required Vault");
 				TutorialView.ErrorReports.add(Report);
 				PluginSection.set("Compatibles.Vault", false);
+				FileManager.Save(PluginSection, ConfigFile);
 				return;
 			}
 		}
@@ -61,6 +61,7 @@ public class Config
 				Report.setMessage("Not found related to the Economy on the server");
 				TutorialView.ErrorReports.add(Report);
 				PluginSection.set("Compatibles.Economy", false);
+				FileManager.Save(PluginSection, ConfigFile);
 			}
 		}
 
@@ -73,6 +74,7 @@ public class Config
 			Report.setMessage("Not found related to the Economy on the server");
 			TutorialView.ErrorReports.add(Report);
 			PluginSection.set("Compatibles.Economy", false);
+			FileManager.Save(PluginSection, ConfigFile);
 		}
 		
 		TutorialView.UsingVaultPlugin = PluginSection.getBoolean("Compatibles.Vault");

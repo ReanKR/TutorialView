@@ -27,17 +27,26 @@ package org.whitehack97.TutorialView;
  *  authors and contributors and should not be interpreted as representing official policies,
  *  either expressed or implied, of anybody else.
  */
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.whitehack97.TutorialView.Listener.CreatingListener;
+import org.whitehack97.TutorialView.Listener.PlayerListener;
+import org.whitehack97.TutorialView.Listener.TutorialListener;
+import org.whitehack97.TutorialView.Util.ErrorReporter;
 import org.whitehack97.TutorialView.api.ErrorReport;
 import org.whitehack97.TutorialView.api.PlayerManager;
 import org.whitehack97.TutorialView.api.TutorialManager;
+import org.whitehack97.TutorialView.commands.TutorialViewCommand;
+import org.whitehack97.TutorialView.config.Config;
+import org.whitehack97.TutorialView.config.TutorialConfig;
 
 public class TutorialView extends JavaPlugin implements Listener
 {
@@ -46,16 +55,29 @@ public class TutorialView extends JavaPlugin implements Listener
 	public static Map<Player, PlayerManager> PlayerInformation = new HashMap<Player, PlayerManager>();
 	public static String Prefix = "」e[」2T」futorial」bV」fiew」e]」f ";
 	public static List<ErrorReport> ErrorReports = new ArrayList<ErrorReport>();
+	public static int ConfigVersion = 1;
+	public static boolean UsingVaultPlugin = true;
+	public static boolean UsingEconomyPlugin = false;
+	
+	private TutorialViewCommand Command;
 	
 	@Override
 	public void onEnable()
 	{
-		
+		plugin = this;
+		Config.CheckingServerPlugin();
+		TutorialConfig.LoadTutorialConfig();
+		ErrorReporter.ExportErrorReport();
+		Bukkit.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new TutorialListener(), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new CreatingListener(), this);
+		Command = new TutorialViewCommand(this);
+		getCommand("TutorialView.Main").setExecutor(Command);
 	}
 	
 	@Override
-	public void onDisable() {
-		// TODO Auto-generated method stub
-		super.onDisable();
+	public void onDisable()
+	{
+		
 	}
 }

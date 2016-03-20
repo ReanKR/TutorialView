@@ -23,23 +23,53 @@ public class TutorialConfig
 	@SuppressWarnings("deprecation")
 	public static void LoadTutorialConfig()
 	{
+		if(! new File("plugins/TutorialView/Tutorials/Example.yml").exists())
+		{
+			FileManager.SpecLoadFile("plugins/TutorialView/Tutorials", "Example");
+		}
+		if(! new File("plugins/TutorialView/Tutorials/Methods/Example_set.yml").exists())
+		{
+			new File("plugins/TutorialView/Tutorials/Methods").mkdir();
+			FileManager.SpecLoadFile("plugis/TutorialView/Tutorials/Methods", "Example_set");
+		}
 		File directory = new File("plugins/TutorialView/Tutorials");
 		File[] files = directory.listFiles();
+		try
+		{
+			if(files[0] == null)
+			{
+				ErrorReport Report = new ErrorReport();
+				Report.setMethod("Warning");
+				Report.setMessage("Tutorial file not exist");
+				TutorialView.ErrorReports.add(Report);
+				return;
+			}
+		}
+		catch(NullPointerException e)
+		{
+			ErrorReport Report = new ErrorReport();
+			Report.setMethod("Warning");
+			Report.setCausedMethod(directory.getAbsolutePath());
+			Report.setAddress(directory.getAbsolutePath());
+			Report.setMessage("Tutorial file not exist");
+			TutorialView.ErrorReports.add(Report);
+			return;
+		}
 		for(File file : files)
 		{
 			if(file.isFile())
 			{
 				if(file.getName().endsWith(".yml"))
 				{
-					String[] Cutter = file.getName().split(".");
-					YamlConfiguration InterfaceSection = FileManager.LoadFile("Tutorials/Methods/" + Cutter[0] + ".set");
-					YamlConfiguration TutorialSection = FileManager.LoadFile("Tutorials/Methods/" + Cutter[0]);
+					String Filename = file.getName().replace(".yml", "");
+					YamlConfiguration InterfaceSection = YamlConfiguration.loadConfiguration(new File("plugins/TutorialView/Tutorials/Methods/" + file.getName() + "_set.yml"));
+					YamlConfiguration TutorialSection = YamlConfiguration.loadConfiguration(new File("plugins/TutorialView/Tutorials/" + file.getName() + ".yml"));
 
 					Set<String> TutorialMethodName = InterfaceSection.getKeys(false);
 					if(TutorialMethodName.size() == 0)
 					{
 						ErrorReport Report = new ErrorReport();
-						Report.setAddress("Tutorials/Methods/" + Cutter[0] + ".yml");
+						Report.setAddress("Tutorials/Methods/" + Filename + ".yml");
 						Report.setMethod("ERROR");
 						Report.setMessage("There is no tutorial config information");
 						TutorialView.ErrorReports.add(Report);
@@ -49,10 +79,10 @@ public class TutorialConfig
 					List<MethodInterface> TutorialMethods = new ArrayList<MethodInterface>();
 					for(String Name : TutorialMethodName)
 					{
-						MethodInterface Interface = new MethodInterface(Cutter[0], Name);
+						MethodInterface Interface = new MethodInterface(Filename, Name);
 						TutorialMethods.add(Interface);
 					}
-					Tutorial tutorial = new Tutorial(Cutter[0]);
+					Tutorial tutorial = new Tutorial(Filename);
 					tutorial.setInterface(TutorialMethods);
 					TutorialManager Manager = new TutorialManager(tutorial);
 					if(TutorialSection.contains("Command")) Manager.setRunCommand(TutorialSection.getString("Command"));
@@ -72,7 +102,7 @@ public class TutorialConfig
 					if(ResultMethodName.size() == 0)
 					{
 						ErrorReport Report = new ErrorReport();
-						Report.setAddress("Tutorials/Methods/" + Cutter[0] + "set.yml");
+						Report.setAddress("Tutorials/Methods/" + Filename + "set.yml");
 						Report.setMethod("ERROR");
 						Report.setMessage("There is no tutorial interface information");
 						TutorialView.ErrorReports.add(Report);
@@ -107,12 +137,12 @@ public class TutorialConfig
 								try
 								{
 									String[] EnchantCutter = Enchant.split(", ");
-									Metadata.addEnchant(Enchantment.getByName(EnchantCutter[0]), Integer.parseInt(Cutter[1]), true);
+									Metadata.addEnchant(Enchantment.getByName(EnchantCutter[0]), Integer.parseInt(EnchantCutter[1]), true);
 								}
 								catch(NullPointerException e)
 								{
 									ErrorReport Report = new ErrorReport();
-									Report.setAddress("Tutorials/Methods/" + Cutter[0] + ".yml");
+									Report.setAddress("Tutorials/Methods/" + Filename + ".yml");
 									Report.setCausedMethod(Enchant);
 									Report.setMethod("ERROR");
 									Report.setMessage("The method is not enchanted");
@@ -123,7 +153,7 @@ public class TutorialConfig
 						itemstack.setItemMeta(Metadata);
 						Manager.addResultItem(itemstack);
 					}
-					TutorialView.AllTutorial.put(Cutter[0], Manager);
+					TutorialView.AllTutorial.put(Filename, Manager);
 				}
 			}
 		}

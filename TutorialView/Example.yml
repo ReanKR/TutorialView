@@ -3,6 +3,9 @@
 # Please refer to the website of the manufacturer for more information.
 # If you found bugs, Please send in this email -> whitehack97@gmail.com
 
+#Command: "example"
+# If other player use this command, run the tutorial.
+
 Name: "&eExample Tutorial"
 # tutorial name. To start the tutorial, required.
 
